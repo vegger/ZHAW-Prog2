@@ -1,0 +1,21 @@
+/*
+ * The settings file is used to specify which projects to include in your build.
+ *
+ * Detailed information about configuring a multi-project build in Gradle can be found
+ * in the user manual at https://docs.gradle.org/6.0.1/userguide/multi_project_builds.html
+ */
+
+// use current directory name as root project name
+rootProject.name = file('.').name
+
+// add subprojects
+include 'JavaFX_WordCloud'
+// add all step subprojects
+file('.').eachDirMatch( ~/step\d{2}.*/) { dir ->
+    if (!dir.name.equals('images')) {
+        String subProjectName = ":${dir.name}"
+        include(subProjectName)
+        project(subProjectName).projectDir = dir
+    }
+}
+

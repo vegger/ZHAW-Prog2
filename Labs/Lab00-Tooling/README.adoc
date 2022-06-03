@@ -1,0 +1,453 @@
+:source-highlighter: coderay
+:icons: font
+:experimental:
+:!sectnums:
+:imagesdir: ./images/
+:handout: ./code/
+
+:logo: IT.PROG2 -
+ifdef::backend-html5[]
+:logo: image:PROG2-300x300.png[IT.PROG2,100,100,role=right,fit=none,position=top right]
+endif::[]
+ifdef::backend-pdf[]
+:logo:
+endif::[]
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+// references
+:github-classroom:  https://classroom.github.com/classrooms[GitHub Classrooms]
+:gradle-install: https://gradle.org/install/[Installation von Gradle]
+:gradle-wrapper: https://docs.gradle.org/current/userguide/gradle_wrapper.html[Gradle Wrapper]
+:chocolatey: https://chocolatey.org/[Chocolatey - Package Manager for Windows]
+:homebrew: https://brew.sh[Homebrew - Package manager for macOS (and Linux)]
+:sdkman: https://sdkman.io[SDKMAN - Software Developer Kit Manager (macOS, Linux)]
+:gitinstall: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git[Installing Git]
+:editorconfig: https://editorconfig.org[EditorConfig]
+:eclipse-plugin-instruction: https://www.vogella.com/tutorials/EclipseGradle/article.html[Install Eclipse Gradle (Buildship) tooling]
+:gradle-tool-jetbrains: https://www.jetbrains.com/help/idea/jetgradle-tool-window.html[Gradle Tool Fenster auf der Jetbrains Webpage]
+:buildship-plugin: https://github.com/eclipse/buildship[Eclipse Buildship Plugin]
+:vscode-java-extension-pack: https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack[Extension Pack for Java]
+:vscode-gradle-plugin: https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-gradle[Gradle for Java Plugin]
+
+
+= {logo} Praktikum Tooling – Gradle & GitHub-Classroom
+
+== Einleitung
+
+In diesem Praktikum machen Sie sich mit dem Build-Tool Gradle vertraut, das zum  Erstellen und Verwalten von Java-Projekten verwendet wird. Zudem üben Sie das Bearbeiten und Abgeben von PROG2-Praktikumsaufgaben.
+
+In diesem Praktikum werden Sie:
+
+* Sich in Ihrem GitHub-Classroom registrieren. (Wenn Sie diese Anleitung lesen ist das bereits erfolgt.)
+* Die notwendigen Entwicklerwerkzeuge installieren
+* Das Praktikums-Repository aus GitHub-Classrooms auf Ihren Rechner clonen.
+* Ein einfaches Java-Projekt mit Gradle erstellen und bearbeiten.
+* Das Resultat in GitHub-Classroom abgeben.
+* Das Projekt in Ihre bevorzugte IDE integrieren.
+
+=== Voraussetzungen
+* Ein Benutzerkonto auf GitHub.com
+
+=== Tooling
+
+* Installiertes JDK (Version 16+, empfohlen 17)
+* Installierter Git-Client
+* Ein einfacher Texteditor und Ihre bevorzugte Java IDE
+* Kommandozeile / Terminalemulation (java und git muss auf der Kommandozeile funktionieren)
++
+[NOTE]
+Für Windows empfehlen wir die Git-Bash oder die Bash aus dem Windows Subsystem für Linux (WSL)
+zu verwenden. +
+Für Linux & macOS können Sie das mitgelieferte Terminal und Shell (bash, zsh, ...) verwenden.
+
+
+=== Struktur
+
+Ein Praktikum kann verschiedene Arten von Aufgaben enthalten, die wie folgt gekennzeichnet sind:
+
+[TU] – Theoretische Übung::
+Dient der Repetition bzw. Vertiefung des Stoffes aus der Vorlesung und als Vorbereitung für die nachfolgenden Übungen.
+
+[PU] – Praktische Übung::
+Übungsaufgaben zur praktischen Vertiefung von Teilaspekten des behandelten Themas.
+
+[PA] – Pflichtaufgabe::
+Übergreifende Aufgabe zum Abschluss. Das Lösen dieser Aufgaben ist Pflicht. Sie muss bis zum definierten Zeitpunkt abgegeben werden, wird bewertet und ist Teil der Vornote.
+
+=== Zeit und Bewertung
+
+Für dieses Praktikum steht eine Woche, in den Praktikumslektionen und im Selbststudium, zur Verfügung. +
+Je nach Kenntniss- und Erfahrungsstufe benötigen Sie mehr oder weniger Zeit.
+
+Dieses Übungspraktikum wird nicht bewertet.
+
+:sectnums:
+:sectnumlevels: 2
+// Beginn des Aufgabenblocks
+== Einfaches Projekt mit Gradle erstellen
+
+=== Gradle auf Ihrem Rechner installieren [PU]
+
+Damit sie Ihre Projekte vollumfänglich mit Gradle verwalten können, muss dies auf Ihrem Rechner installiert sein.
+[NOTE]
+====
+Wenn Sie nur konfigurierte Projekte verwenden, reicht auch der Gradle-Wrapper. Dazu später mehr.
+====
+
+
+[loweralpha]
+. Gradle benötigt eine aktuelle Java Installation. +
+Stellen Sie sicher, dass sie eine aktuelle Version installiert haben [Version 16+, empfohlen 17].
++
+Verifizieren Sie dies in Ihrem Terminal:
++
+[source, bash]
+----
+java --version
+----
++
+Ansonsten installieren Sie eine aktuelle Java-JDK-Distribution.
++
+[TIP]
+====
+Wir empfehlen Ihnen für die Installation der Entwicklungswerkzeuge ein Package-Manager zu verwenden:
+
+* {chocolatey}
+* {homebrew}
+* Package manager Ihrer Linux-Distribution (APT, YUM/DNF, Pacman, Zypper, Portage, ...)
+
+* {sdkman} ist speziell für das Management von Java-spezifischen Werkzeugen geeignet.
+Neben praktisch allen verfügbaren Java-Distributionen können auch die meisten weiteren Java resp. JVM-basierten Werkzeuge und Frameworks installiert werden (Gradle, Maven, Groovy, Kotlin, Scala, Spring Boot, ...).
+SDKMAN ermöglicht mehrere Java-Distributionen und Versionen zu installieren und schnell zwischen ihnen zu wechseln.
+====
+
+. Folgen Sie der offiziellen Anleitung für die {gradle-install}. +
+Danach verifizieren Sie im Terminal, dass diese korrekt funktioniert hat:
++
+[source, bash]
+----
+gradle --version
+gradle help <1>
+----
+<1> Beim ersten Ausführen eines gradle Tasks wird der Gradle-Daemon gestartet, um nachfolgende Operationen zu beschleunigen.
+
+
+=== Gradle-Projekt in Git-Repository anlegen [PU]
+
+In dieser Übung clonen sie das Praktikumsrepository und erstellen die Projektstruktur für Gradle.
+
+[loweralpha]
+. Als erstes stellen Sie sicher, dass sie Git installiert haben.
++
+Verifizieren Sie dies in Ihrem Terminal:
++
+[source, bash]
+----
+git --version
+----
++
+Ansonsten installieren Sie einen aktuellen Git-Client. Siehe dazu {gitinstall}, bzw. verwenden Sie Ihren Package-Manager.
+
+. Clonen Sie das Praktikums-Repository in ein PROG2 Arbeitsverzeichnis auf Ihrem Rechner.
++
+Wir empfehlen Ihnen dies auf der Kommandozeile zu tun:
+[numeric]
+.. Öffnen Sie ein Terminal und navigieren Sie mit dem `cd` Kommando zum gewählten PROG2 Arbeitsverzeichnis.
++
+[TIP]
+====
+Statt den Pfad im Terminal von Hand zu tippen, können Sie das Verzeichnis aus dem File-Explorer (Windows) bzw. Finder (macOS) auf das Terminal-Fenster ziehen (drag-n-drop), womit der entsprechende Pfad an der aktuellen Cursor-Position eingefügt wird.
+
+Alternativ kann man auch im Windows File-Explorer ins Verzeichnis Navigieren und im Kontext-Menu (Rechte Maustaste) "Open git bash" auswählen bzw. im macOS-Finder im Kontext-Menu (Dienste > Neues Terminal beim Ordner) auswählen.
+====
+
+.. Kopieren Sie die HTTPS-URL des Praktikumsrepositories (bzw. die SSH-Adresse, sofern sie SSH mit GitHub.com konfiguriert haben) vom GitHub-Server und clonen Sie das Repository auf ihren Rechner. In der Kommandozeile geben Sie dazu den folgenden Befehl ein (verwenden Sie Ihre Repository-URL):
++
+[code, bash]
+----
+git clone <Repository-URL> Lab00-Tooling #<1>
+----
+<1> Mit dem optionalen Parameter `Lab00-Tooling` wird der lokalen Verzeichnisname spezifiziert, in welches das Repository gecloned wird.
+Ansonsten wird der von GitHub-Classroom generierte Name (inkl. Klasse und Benutzername) verwendet. +
+Wir werden in den nachfolgenden Schritten diesen einheitlichen Namen für das Projektverzeichnis verwenden.
+
+. Wechseln sie ins Praktikumsverzeichnis (`cd Lab00-Tooling`).
+Im Moment existiert in diesem Verzeichnis nur diese Anleitung und ein paar Konfigurationsdateien.
+
+. Als Nächstes erstellen Sie ein Java-Projekt mittels gradle. Der Befehl `gradle init` fragt Sie interaktiv nach den erforderlichen Angaben und erstellt die notwendigen Dateien und Konfigurationen. +
+In unserem Fall werden wir ein Projekt mit folgenden Attributen erstellen:
++
+****
+[horizontal]
+Project type:: application
+Language:: Java
+Subprojects:: no
+Configuration-DSL:: Groovy
+New API and behavior:: no
+Test Framework:: Junit Jupiter
+Project name:: `Lab00-Tooling`
+Source package:: `ch.zhaw.prog2.tooling`
+****
++
+Alternativ können diese Angaben auch direkt als Optionen dem Kommando mitgegeben werden:
++
+[source,bash]
+----
+gradle init --type java-application \
+  --dsl groovy --test-framework junit-jupiter \
+  --project-name Lab00-Tooling \
+  --package ch.zhaw.prog2.tooling
+----
+
+. Im Projektverzeichnis wurde die notwendige Struktur und Konfiguration für eine Beispiel-App konfiguriert.
+Die Struktur finden Sie auch in den Einführungsvorlesung erläutert:
++
+[source, text]
+----
+Lab00-Tooling
+├── .editorconfig <9>
+├── .gitattributes <10>
+├── .gitignore <11>
+├── .gradle <8>
+│   └── ...
+├── README.adoc
+├── app <2>
+│   ├── build.gradle <3>
+│   ├── src <4>
+│   │   ├── main
+│   │   │   ├── java
+│   │   │   │   └── ch
+│   │   │   │       └── zhaw
+│   │   │   │           └── prog2
+│   │   │   │               └── tooling
+│   │   │   │                   └── App.java
+│   │   │   └── resources
+│   │   └── test
+│   │       ├── java
+│   │       │   └── ch
+│   │       │       └── zhaw
+│   │       │           └── prog2
+│   │       │               └── tooling
+│   │       │                   └── AppTest.java
+│   │       └── resources
+│   └── build <5>
+│       ├── classes
+│       │   └── java
+│       │       └── main
+│       │           └── ch
+│       │               └── zhaw
+│       │                   └── prog2
+│       │                       └── tooling
+│       │                           └── App.class
+│       └── libs
+│           └── app.jar
+├── gradle
+│   └── wrapper <6>
+│       ├── gradle-wrapper.jar
+│       └── gradle-wrapper.properties
+├── gradlew <7>
+├── gradlew.bat <7>
+└── settings.gradle <1>
+
+----
++
+<1> Projektkonfiguration. Sie enthält den Projektnamen und die Liste der Module/Subprojekte. Liegt immer im Root-Ordner des Projektes.
+<2> Unterverzeichnis mit Anwendung/Modul. Der Name muss mit Angabe in Projektkonfiguration übereinstimmen.
+<3> Konfiguration der Anwendung/Modul (Dependencies, Plugins, ...)
+<4> Quellcode der Anwendung/Modul, getrennt nach Anwendung (`main`), Tests (`test`), jeweils unterteilt in Klassen die übersetzt (`java`) und Ressourcen, die nur kopiert werden (`resources`).
+<5> Im `build`-Verzeichnis liegen die generierten Artefakte, wie z.B. die kompilierten Klassen (`classes`) oder die finalen Anwendungsarchive (`libs`).
+Da alle Dateien wieder generiert werden können, sollte dieses Verzeichnis nicht ins Git-Repository (→ `.gitignore`)
+<6> Gradle-Wrapper-Archiv und -Konfiguration (siehe Abschnitt <<Der Gradle-Wrapper>>).
+<7> Scripts zum Ausführen des Gradle-Wrappers (siehe Abschnitt <<Der Gradle-Wrapper>>)
+<8> Gradle-Cash-Verzeichnis (`.gradle`, in welche heruntergeladene Elemente und Statusinformationen abgelegt werden. Nicht unter Versionskontrolle (→ `.gitignore`).
+<9> Die {editorconfig}-Konfiguration wurde nicht durch gradle erstellt, sondern im Praktiumsrepository mitgeliefert.
+Sie erlaubt die Coding-Styles (Einrückungen, Zeilenende, etc.) IDE unabhängig im Projekt zu speichern.
+Die IDE berücksichtigen diese Konfiguration (teilweise wird ein Plugin benötigt).
+<10> `.gitattributes` wird erstellt (falls es nicht schon existiert), damit Windows Batch-Dateien (z.B. `gradle.bat`) korrekt im Git-Repository kodiert werden.
+<11> In `.gitignore` müssen die Verzeichnisse für die generierten bzw. Cache-Dateien konfiguriert sein.
+Falls die Datei nicht existiert, wird sie durch `gradle init` erstellt.
++
+[NOTE]
+====
+Die im Praktikum enthaltene `.gitignore`-Datei beinhaltet weitere Muster von Dateien, die nicht ins Repository eingecheckt werden sollen, wie zum Beispiel die IDE-Konfigurationen (`.idea`, `.project`, `.vscode`, `bin`, ...), andere temporäre Dateien wie `*.log`,`.DS_Store`, `.Thumbs` und viele mehr.
+====
+
+
+. Starten Sie die Tests der Anwendung.
++
+.Linux, macOS, git-bash, WSL:
+[source,bash]
+----
+./gradlew test <1>
+----
++
+.Windows:
+[source,bash]
+----
+.\gradlew.bat test <1>
+----
+<1> Es wird empfohlen, den Gradle-Wrapper zum Ausführen von Gradle-Tasks zu verwenden.
+Mehr dazu im Abschnitt <<Der Gradle-Wrapper>>.
++
+Automatisch wird die Anwendung und die Tests kompiliert, sowie die Tests via den konfigurierten Test-Runner ausgeführt.
+
+. Da es sich um eine Anwendung handelt, kann diese auch mit gradle gestartet werden:
++
+.Linux, macOS, git-bash, WSL:
+[source,bash]
+----
+./gradlew run
+----
++
+.Windows:
+[source,bash]
+----
+.\gradlew.bat run
+----
+
+. Ändern Sie die Begrüssung in der App mit einem Texteditor von `"Hello World!"` nach z.B. `"Hello PROG2!"` und starten Sie die Anwendung. +
+Sie werden feststellen, dass gradle merkt, dass die Quelle geändert wurde (neuer ist als die Klasse) und die notwendigen Klassen automatisch kompiliert werden, bevor sie gestartet wird.
+
+. Mit `gradle tasks` werden die verfügbaren Tasks angezeigt. Zum Beispiel können Sie mittels `gradle clean` automatisch das Projekt bereinigen und alle generierten Dateien (`build`-Verzeichnis) löschen.
+
+==== Der Gradle-Wrapper
+Beim Erstellen des Projekts mit `gradle init` wurde auch der Gradle-Wrapper installiert (`gradle wrapper`).
+Damit wird Gradle als kompiliertes Archiv `gradle-wrapper.jar` im Projekt abgelegt, welches mit einem Shell-Script `gradlew` für Linux, macOS, git-bash, WSL und einem Batch-Script `gradlew.bat` für die Windows-Kommandozeile (CMD/PowerShell) ausgeführt werden kann. Gradle wird so mit dem Projekt ausgeliefert und muss nicht im System installiert sein. +
+Mittels der Wrapper-Konfiguration `gradle-wrapper.properties`, wird damit auch spezifiziert, welche Gradle-Version für dieses Projekt verwendet werden soll.
+
+Weitere Infos finden Sie in der  {gradle-wrapper} Dokumentation.
+
+
+=== Abgeben des Resultats in GitHub Classroom [PU]
+
+Während Sie an den Praktikumsaufgaben arbeiten sollten Sie die Resultate regelmässig ins Repository einchecken.
+Dies erfolgt mit den bekannten Git-Befehlen.
+[NOTE]
+Wir empfehlen Ihnen Git auf der Kommandozeile zu verwenden, um die Anwendung der Kommandos zu üben.
+
+[loweralpha]
+. Fügen Sie die neuen Dateien zur Staging-Area hinzu
++
+[source,bash]
+----
+git add --all
+----
+
+. Verifizieren sie, dass keine neuen Dateien versioniert werden, die nicht ins Repository gehören:
++
+[source,bash]
+----
+git status
+----
++
+Gegebenenfalls fügen Sie diese zu `.gitignore` hinzu und entfernen diese mittels `git restore --staged <Datei>` aus der Staging-Area.
+
+. Sobald alles korrekt aussieht, commiten Sie die Änderungen zum Repository:
++
+[source,bash]
+----
+git commit -m "Created initial gradle project"
+----
+
+In regelmässigen Abständen sollten Sie Ihre Lösungen zum GitHub-Repository transferieren (Pushen).
+Zum Beispiel, sobald Sie einen Abschnitt des Praktikums gelöst haben.
+Auf jeden Fall müssen Sie jedoch Ihre Lösung vor dem Abgabetermin des Praktikums übermitteln.
+
+
+[loweralpha, start=4]
+. Übermittelns Sie alle neuen Commits zum GitHub-Repository:
++
+[source,bash]
+----
+git push origin
+----
+Sie werden feststellen, dass nach dem Push automatisch auf GitHub ein Autograding-Prozess gestartet wird.
+Ob dieser erfolgreich war, wird ihnen angezeigt.
+Sie können jedoch auch die Details in Ihrem GitHub-Praktikumsrepository unter "Actions" inspizieren und nachsehen, warum ein Test fehlgeschlagen ist.
+
+[IMPORTANT]
+Für die Autograding-Funktion existieren Nutzungslimiten.
+Bitte pushen Sie Ihre Lösungen deshalb nicht unnötig oft, sondern nur dann, wenn Sie sinnvolle Resultate haben. Zum Beispiel, wenn Sie eine Pflichtaufgabe gelöst haben und die lokalen Tests nicht mehr Fehlschlagen. Und natürlich den finalen Stand vor dem Abgabetermin.
+
+
+
+== Öffnen und Bearbeiten des Projekts in Ihrer bevorzugten IDE
+
+Die verbreiteten Java-IDEs unterstützen Gradle basierte Projekte, erkennen dies und importieren die Projektkonfiguration automatisch bzw. verwenden Gradle im Hintergrund für das Management des Projektes.
+
+[loweralpha]
+. Öffnen Sie in Ihrer bevorzugten IDE gemäss den untenstehenden Instruktionen und Hinweisen.
+. Inspizieren Sie die Projektstruktur, Konfigurationsdateien, etc.
+. Wo finden Sie die Gradle-Hilfsmittel in ihrer IDE? Wie können Sie einen spezifischen Gradle-Task aus der IDE starten?
+. Führen Sie die Anwendung aus.
+. Führen Sie den Test aus. Wo werden die Resultate angezeigt?
+.
+
+
+==== JetBrains IntelliJ IDEA [PU]
+
+Das Gradle-Plugin ist in IntelliJ standardmässig enthalten. Es ist standardmässig so konfiguriert, dass es Gradle-Projekte im Hintergrund automatisch den Gradle-Wrapper verwenden, falls vorhanden.
+
+. Öffnen Sie Ihr Projekt mittels menu:File[Open...] und wählen Ihr Projektverzeichnis aus.
++
+[TIP]
+====
+Wenn Sie das IDEA-Kommandozeilen-Werkzeug von IntelliJ installiert haben (JetBrains Toolbox), können Sie das Projekt auch aus dem Terminal mittels `idea <Verzeichnisname>` öffnen.
+====
++
+Es wird automatisch erkannt, dass es sich um ein Gradle-Projekt handelt und die Gradle-Konfiguration übernommen. In der Projektstruktur (menu:File[Project Structure...]) kann dies verifiziert werden.
+
+. Im __Gradle-Tool__ Fenster (Knopf am rechten Rand) werden automatisch alle Module und Tasks angezeigt und können von dort ausgeführt werden. Ebenfalls kann hier die Gradle-Konfiguration synchronisiert werden, wenn diese in den Konfigurationsdateien (`settings.gradle`, `build.gradle`, ...) angepasst wird. Details finden Sie in der Dokumentation zum {gradle-tool-jetbrains}
+
+==== Eclipse
+
+Für Eclipse wird das {buildship-plugin} für die Verwendung von gradle benötigt.
+Je nach Distribution ist dieses Plugin bereits installiert.
+
+. Öffnen Sie den Marketplace (menu:Help[Marketplace]) und suchen Sie nach __buildship__
+. Installieren Sie das Plugin und starten Eclipse neu.
+. Öffnen Sie das Projekt mittel menu:File[Open Projects from File System]
+. Wählen Sie __Show other specialized import wizards__
+. Selektieren Sie __Gradle__ / __Existing Gradle Project__
+
+Sie finden die **gradle tasks** in der view __Gradle Tasks__.
+Diese können Sie im Menu menu:Window[Show View > Other... > Gradle Tasks] aktivieren.
+
+Weitere Infos finden Sie in der Dokumentation zum {buildship-plugin}.
+
+==== VS Code
+
+In VS Code benötigen Sie neben Microsofts {vscode-java-extension-pack} zur generellen Unterstützung von Java, das {vscode-gradle-plugin}.
+
+. Suchen Sie im Extension-Marketplace nach den Plugins und installieren sie diese.
+. Öffnen Sie das Projekt mittels menu:Datei[Ordner öffnen...]
++
+[TIP]
+====
+Wenn Sie das VSCode-Kommandozeilen-Werkzeug installiert haben (menu:Anzeigen[Befehlspalette...], nach "Install code command in Shell" suchen und ausführen), können Sie das Projekt auch aus dem Terminal mittels `code <Verzeichnisname>` öffnen.
+====
++
+Das Gradle-Projekt wird automatisch erkannt und konfiguriert.
+
+. Die Gradle Projektübersicht und Tasks finden sie im Gradle-Fenster (linker Rand)
+
+// Ende des Aufgabenblocks
+:!sectnums:
+// == Aufräumarbeiten
+== Hinweis zu den nachfolgenden Praktika
+
+In den kommenden bewerteten Praktika werden wir Ihnen die Gradle-Konfiguration bereits im Repository mitliefern.
+Sie müssen die Gradle-Projekte nicht mehr erstellen, sondern können diese direkt in der IDE öffnen und bearbeiten.
+
+Hingegen müssen Sie wissen, wie man die Projekte bearbeitet, die Anwendungen / Tasks startet und gegebenenfalls die Konfiguration erweitert oder anpasst.
+
+== Abschluss
+
+Damit sind Sie am Ende des Praktikums angelangt.
+Stellen Sie sicher, dass Ihre Sie Lösungen vor dem Abgabetermin ins GitHub-Classrooms Abgaberepository pushen.

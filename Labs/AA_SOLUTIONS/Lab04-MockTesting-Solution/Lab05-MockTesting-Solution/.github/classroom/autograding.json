@@ -1,0 +1,14 @@
+{
+  "tests": [
+    {
+      "name": "Run ShoppingList unit tests for autograding",
+      "setup": "",
+      "run": "gradle :ShoppingList:test --info",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 2
+    }
+  ]
+}

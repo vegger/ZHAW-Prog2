@@ -1,0 +1,57 @@
+plugins {
+    // Support for Java
+    id 'java'
+    // Support for Java applications.
+    id 'application'
+    // Support for JavaFX
+    id 'org.openjfx.javafxplugin' version '0.0.12'
+}
+
+repositories {
+    // Use maven central for resolving dependencies.
+    mavenCentral()
+}
+
+dependencies {
+    // Use JUnit Jupiter for testing.
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+
+    //testCompile "org.testfx:testfx-core:4.0.16-alpha"
+    //testCompile "org.testfx:testfx-junit5:4.0.16-alpha"
+
+    // This dependency is used by the application.
+    implementation 'com.google.guava:guava:31.0.1-jre'
+}
+
+javafx {
+    version = '17'
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+
+application {
+    // Define the main class for the application.
+    mainClass = 'ch.zhaw.prog2.example.fxml.App'
+}
+
+task runCodeVersion (type: JavaExec) {
+    group 'application'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'ch.zhaw.prog2.example.code.App'
+}
+
+task runReflectionVersion (type: JavaExec) {
+    group 'application'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'ch.zhaw.prog2.example.reflection.App'
+}
+
+task runFXMLVersion (type: JavaExec) {
+    group 'application'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'ch.zhaw.prog2.example.fxml.App'
+}
+
+tasks.named('test') {
+    // Use JUnit Platform for unit tests.
+    useJUnitPlatform()
+}

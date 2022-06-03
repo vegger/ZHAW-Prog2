@@ -1,0 +1,11 @@
+.label
+{
+    -fx-font-family: "consolas";
+    -fx-font-size: 16px;
+    -fx-font-style: normal;
+    -fx-font-weight: bolder;
+    -fx-font-color: RED;
+    -fx-alignment: top-right;
+    -fx-background-color:YELLOW; 
+    -fx-border-color:GREEN;
+}

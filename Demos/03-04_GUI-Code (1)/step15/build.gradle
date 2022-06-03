@@ -1,0 +1,23 @@
+plugins {
+    // Support for Java
+    id 'java'
+    // Support for Java applications.
+    id 'application'
+    // Support for JavaFX
+    id 'org.openjfx.javafxplugin' version '0.0.11'
+}
+
+repositories {
+    // Use maven central for resolving dependencies.
+    mavenCentral()
+}
+
+application {
+    // Define the main class for the application.
+    mainClass = 'ch.zhaw.prog2.step15.MainTransformation'
+}
+
+javafx {
+    version = '17'
+    modules = [ 'javafx.controls' ]
+}

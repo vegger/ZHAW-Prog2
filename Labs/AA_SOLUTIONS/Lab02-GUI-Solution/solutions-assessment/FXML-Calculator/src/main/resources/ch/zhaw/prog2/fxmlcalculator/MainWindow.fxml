@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.input.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="360.0" minWidth="460.0" prefHeight="500.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ch.zhaw.prog2.fxmlcalculator.MainWindowController">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="Clear">
+            <items>
+                  <CheckMenuItem fx:id="checkInitialAmount" mnemonicParsing="false" selected="true" text="Initial amount" />
+                  <CheckMenuItem fx:id="checkReturn" mnemonicParsing="false" selected="true" text="Return in %" />
+                  <CheckMenuItem fx:id="checkCosts" mnemonicParsing="false" selected="true" text="Annual costs" />
+                  <CheckMenuItem fx:id="checkYears" mnemonicParsing="false" selected="true" text="Number of years" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="menuClearValues" mnemonicParsing="false" onAction="#clearValues" text="Clear values" />
+                  <MenuItem fx:id="menuClearResult" mnemonicParsing="false" onAction="#clearResult" text="Clear results" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="?">
+            <items>
+                  <MenuItem fx:id="menuHelp" mnemonicParsing="false" onAction="#showHelp" text="Show help">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="F1" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <VBox minWidth="300.0" BorderPane.alignment="TOP_CENTER">
+         <children>
+            <GridPane hgap="5.0" vgap="5.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="120.0" />
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="50.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="Initial amount" GridPane.rowIndex="0" />
+                  <Label text="Return rate in %" GridPane.rowIndex="1" />
+                  <Label text="Annual Costs" GridPane.rowIndex="2" />
+                  <Label text="Number of years" GridPane.rowIndex="3" />
+                  <TextField fx:id="initialAmount" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                  <TextField fx:id="returnInPercent" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="annualCost" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="numberOfYears" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <VBox.margin>
+                  <Insets bottom="5.0" top="10.0" />
+               </VBox.margin>
+            </GridPane>
+            <VBox spacing="5.0" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+               <children>
+                  <Label text="Results">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <TextArea fx:id="results" editable="false" minHeight="24.0" prefHeight="24.0" prefWidth="580.0" VBox.vgrow="ALWAYS" />
+               </children>
+            </VBox>
+         </children>
+         <padding>
+            <Insets left="10.0" right="10.0" />
+         </padding>
+      </VBox>
+   </center>
+   <bottom>
+      <HBox alignment="BOTTOM_CENTER" minWidth="440.0" prefHeight="27.0" prefWidth="600.0" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openResultWindow" prefWidth="130.0" text="Open result window" />
+            <Button maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openResultInSameWindow" prefWidth="120.0" text="Open result view" />
+            <HBox maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="200.0" />
+            <Button maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#calculateResultBound" prefWidth="80.0" text="Calculate" />
+            <Button maxHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#closeWindow" prefWidth="80.0" text="Close" />
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+         </BorderPane.margin>
+      </HBox>
+   </bottom>
+</BorderPane>

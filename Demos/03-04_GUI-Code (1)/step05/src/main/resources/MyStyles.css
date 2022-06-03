@@ -1,0 +1,9 @@
+.label
+{
+    -fx-font-family: "Arial";
+    -fx-font-size: 12px;
+    -fx-font-style: normal;
+    -fx-font-weight: bolder;
+    -fx-font-color: BLACK;
+    -fx-alignment: top-left;
+}
