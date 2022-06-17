@@ -1,0 +1,29 @@
+:source-highlighter: coderay
+:icons: font
+:experimental:
+:!sectnums:
+:imagesdir: ./images/
+:handout: ./code/
+
+:logo: IT.PROG2 -
+ifdef::backend-html5[]
+:logo: image:PROG2-300x300.png[IT.PROG2,100,100,role=right,fit=none,position=top right]
+endif::[]
+ifdef::backend-pdf[]
+:logo:
+endif::[]
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+= {logo} Lösungen zu den Pflichtaufgaben Functional Programming
+
+
+****
+Keine zusätzlichen Lösungen. Hinweise zu den theoretischen Fragen finden Sie in `solutions-exercises`. +
+Die Musterlösung finden Sie im Modul `Streaming-sol`.
+****
